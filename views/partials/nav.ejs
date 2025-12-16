@@ -1,0 +1,88 @@
+<header class="bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg">
+  <nav class="container mx-auto flex justify-between items-center px-4 py-4">
+    <!-- Logo -->
+    <div class="flex-shrink-0">
+      <a href="/" class="text-2xl font-bold hover:text-red-100 transition duration-300">
+        🏠 airbnb
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="hidden md:flex space-x-1 items-center flex-1 justify-center">
+      <% if (isLoggedIn) { %>
+            <!-- Show guest menu items if user type is guest -->
+            <% if (userType === 'guest') { %>
+        <li>
+          <a
+            href="/homes"
+            class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded-lg transition duration-300 font-medium"
+          >
+            Homes List
+          </a>
+        </li>
+        <li>
+          <a
+            href="/favourites"
+            class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded-lg transition duration-300 font-medium"
+          >
+            ⭐ Favourites
+          </a>
+        </li>
+        <li>
+          <a
+            href="/bookings"
+            class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded-lg transition duration-300 font-medium"
+          >
+            📅 Bookings
+          </a>
+        </li>
+      <% } else{ %>
+
+        <li>
+          <a
+            href="/host/host-homes-list"
+            class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded-lg transition duration-300 font-medium"
+          >
+            🏠 Host Homes
+          </a>
+        </li>
+        <li>
+          <a
+            href="/host/add-home"
+            class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded-lg transition duration-300 font-medium"
+          >
+            ➕ Add Home
+          </a>
+        </li>
+      <% } %>
+      <% } %>
+    </ul>
+
+    <!-- Right Side Auth Links -->
+    <div class="flex items-center space-x-2">
+      <% if (!isLoggedIn) { %>
+        <a
+          href="/login"
+          class="py-2 px-4 rounded-lg hover:bg-red-400 transition duration-300 font-medium"
+        >
+          Login
+        </a>
+        <a
+          href="/signup"
+          class="py-2 px-4 rounded-lg bg-white text-red-500 hover:bg-red-50 transition duration-300 font-bold"
+        >
+          Sign Up
+        </a>
+      <% } else { %>
+        <form action="/logout" method="POST" class="inline">
+          <button
+            type="submit"
+            class="py-2 px-4 rounded-lg bg-white text-red-500 hover:bg-red-50 transition duration-300 font-bold"
+          >
+            Logout
+          </button>
+        </form>
+      <% } %>
+    </div>
+  </nav>
+</header>

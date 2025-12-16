@@ -1,0 +1,12 @@
+<!-- If there are any validation errors, show the error box ,errors is an array like:["Invalid email", "Password too short"]-->
+<% if( errors.length>0) {%> 
+              <div class="bg-red-100 text-red-700 p-4 rounded-xl border border-red-300 mb-6">
+                <p class="font-semibold text-red-800 mb-3">Please fix the following errors:</p>
+                <ul class="list-disc list-inside space-y-2">
+                  <!-- Loop through each error in the array,If errors is:["Invalid email", "Password too short"],Then the loop will run twice.-->
+                  <% errors.forEach((error)=> { %> 
+                    <!-- Display each error as a list item-->
+                    <li class="text-red-700"><%= error %></li> 
+                  <% }); %>
+                </ul>
+              <%}%>
