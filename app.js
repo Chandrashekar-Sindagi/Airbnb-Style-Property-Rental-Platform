@@ -7,7 +7,7 @@ const multer=require('multer');//for file upload
 const session=require('express-session')
 const { default:mongoose }=require('mongoose')
 const MongoDBStore=require('connect-mongodb-session')(session)
-const DB_PATH="mongodb+srv://root:Appaamma%40123@cluster0.ai8ngnf.mongodb.net/airbnb?retryWrites=true&w=majority"
+const DB_PATH="mongodb+srv://root:Root12345@cluster0.ai8ngnf.mongodb.net/airbnb?retryWrites=true&w=majority"
 
 //Local Module
 const storeRouter = require("./routes/storeRouter")
@@ -106,9 +106,8 @@ app.use(errorController.pageNotFound)
 
 
 const PORT = process.env.PORT || 3002;
-
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => {
+mongoose.connect(process.env.DB_PATH)
+.then(() => {
     console.log("Connected to Mongo");
 
     app.listen(PORT, () => {
