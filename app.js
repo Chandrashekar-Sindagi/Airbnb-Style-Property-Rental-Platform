@@ -68,10 +68,10 @@ const storage= multer.diskStorage({
 const multeroptions={
    storage,fileFilter// this storage is coming from const storage above,
 }
-
+app.use(express.static(path.join(rootDir, 'public')))
 app.use(express.urlencoded());
 app.use(multer(multeroptions).single('photo'));//this is for parsing multipart/form-data ,single->for single file upload and 'photo' is the name of the input field in the form where user selects the file to upload
-app.use(express.static(path.join(rootDir, 'public')))
+
 app.use("/uploads",express.static(path.join(rootDir,'uploads')))//making uploads folder public so that images can be accessed directly from browser
 app.use("/host/uploads",express.static(path.join(rootDir,'uploads')))//this is bcoz in host/edit-home.ejs i am using /host/uploads/.. to show image so need to make this also static
 app.use("/homes/uploads",express.static(path.join(rootDir,'uploads')))//this is bcoz in store/home-details.ejs i am using /homes/uploads/.. to show image so need to make this also static
@@ -104,15 +104,17 @@ app.use("/host", hostRouter);
 
 app.use(errorController.pageNotFound)
 
-const PORT = 3002;
 
+const PORT = process.env.PORT || 3002;
 
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("Connected to Mongo");
 
-mongoose.connect(DB_PATH).then(()=>{
-  console.log("Connected to Mongo")
-app.listen(PORT, () => {
-  console.log(`Server running on address http://localhost:${PORT}`);
-})
-}).catch(err=>{
-   console.log("Error While Connecting to Mongoose",err)
-})
+    app.listen(PORT, () => {
+      console.log(`Server running on address http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.log("Error While Connecting to Mongoose", err);
+  });
