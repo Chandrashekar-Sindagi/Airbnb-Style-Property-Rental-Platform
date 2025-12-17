@@ -1,6 +1,6 @@
 const path = require('path');
-const dotenv = require('dotenv');
-dotenv.config();
+// const dotenv = require('dotenv');
+// dotenv.config();
 // External Modules
 const express = require('express');
 const multer = require('multer'); // file upload
@@ -8,7 +8,8 @@ const session = require('express-session');
 const { default: mongoose } = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 // Use environment variable for connection string
-const DB_PATH = process.env.MONGODB_URI;
+const DB_PATH = process.env.DB_PATH;
+
 
 // Local Modules
 const storeRouter = require('./routes/storeRouter');
@@ -98,16 +99,18 @@ app.use('/host', hostRouter);
 
 app.use(errorController.pageNotFound);
 
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
+
 
 mongoose
   .connect(DB_PATH)
   .then(() => {
     console.log('Connected to Mongo');
     app.listen(PORT, () => {
-      console.log(`Server running on address http://localhost:${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((err) => {
     console.log('Error while connecting to Mongo: ', err);
   });
+
